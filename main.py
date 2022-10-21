@@ -1,5 +1,4 @@
 import random
-numero_combat = 0
 playing = True
 nombre_victoires_consecutives = 0
 combat_statut = "aucun"
@@ -34,14 +33,18 @@ def rules():
 def end_status():
    return print(f"voci votre nombre de combats au total {numero_combat}, votre nombre de victoires consecutives {nombre_victoires_consecutives}")
 while playing:
-    player_life = 20
+    player_life = 2
+    numero_combat = 0
     while player_life >= 1:
-       difficulté = random.randint(1, 20)
+       difficulté = random.randint(1,5)
        try:
-           choice =int(input(f"Vous tombez dans une nouvelle piece face à face avec un adversaire de difficulté : {difficulty} \n Que voulez-vous faire ? \n 1.Combattre cet adversaire \n 2.Contourner cet adversaire et aller ouvrir une autre porte \n 3. Afficher les règles du jeu \n 4.Quitter la partie \n 5. afficher nombre de vie"))
+           choice =int(input(f"Vous tombez dans une nouvelle piece face à face avec un adversaire de difficulté : {difficulté} \n Que voulez-vous faire ? \n 1.Combattre cet adversaire \n 2.Contourner cet adversaire et aller ouvrir une autre porte \n 3. Afficher les règles du jeu \n 4.Quitter la partie \n 5. afficher nombre de vie"))
        except ValueError:
            print("j'ai dis de choisiir entre un et 5 si tu n'as pas compris")
-       if choice == 1:
+       if nombre_victoires_consecutives == 3:
+           get_choice = input(f"Vous tombez dans une nouvelle piece face à face avec un boss car vous avez trois victoires consecutives")
+           fight(random.randint(10,20))
+       elif choice == 1:
            numero_combat += 1
            fight(difficulté)
        elif choice == 2:
@@ -50,11 +53,13 @@ while playing:
            print(rules())
        elif choice == 4:
            playing = False
-       elif nombre_victoires_consecutives == 3:
-           print()
+           quit()
+       elif choice == 5:
+           print(player_life)
 
     recommencer = input("vous avez plus de vie, voulez vous recommencer la partie o/n?,")
     print(end_status())
     if recommencer == "n":
+        print("merci et au revoir")
         playing = False
 
